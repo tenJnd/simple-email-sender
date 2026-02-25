@@ -1,0 +1,8 @@
+SQLAlchemy>=2.0
+typer>=0.9
+click>=8
+google-api-python-client
+google-auth
+google-auth-httplib2
+# Optional for PostgreSQL support
+psycopg2-binary>=2.9
