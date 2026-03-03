@@ -29,7 +29,7 @@ class TestCLI(unittest.TestCase):
     def test_import_and_send_dry_run_and_stats(self):
         # Prepare CSV with a single recipient and flags/notes
         csv_path = self._write_csv([
-            ("Company A", "Brno", "a@example.com", "info", "small"),
+            ("Company A", "Brno", "a@example.com", "generic", "small"),
         ])
 
         # Import
@@ -44,7 +44,7 @@ class TestCLI(unittest.TestCase):
         cid = store.get_or_create_campaign("camp1")
         pending = store.get_pending_recipients(cid)
         self.assertEqual(len(pending), 1)
-        self.assertEqual(pending[0].flags, ["info"])
+        self.assertEqual(pending[0].flags, ["generic"])
         self.assertEqual(pending[0].notes, "Company: Company A, Location: Brno, Size: small")
 
         # Send in dry-run with custom from
@@ -66,7 +66,7 @@ class TestCLI(unittest.TestCase):
 
     def test_optout_prevents_sending(self):
         csv_path = self._write_csv([
-            ("Company A", "Brno", "a@example.com", "info", "small"),
+            ("Company A", "Brno", "a@example.com", "generic", "small"),
         ])
 
         # Import

@@ -14,13 +14,13 @@ class TestStoreBasicFlow(unittest.TestCase):
             store = Store(db_path)
 
             # upsert recipients (insert)
-            r1 = Recipient(email="a@example.com", flags=["info"], status="active", notes="n1")
-            r2 = Recipient(email="b@example.com", flags=["to_person"], status="active", notes="n2")
+            r1 = Recipient(email="a@example.com", flags=["generic"], status="active", notes="n1")
+            r2 = Recipient(email="b@example.com", flags=["personal"], status="active", notes="n2")
             count = store.upsert_recipients([r1, r2])
             self.assertEqual(count, 2)
 
             # upsert recipients (update)
-            r1u = Recipient(email="a@example.com", flags=["info", "x"], status="active", notes="n1u")
+            r1u = Recipient(email="a@example.com", flags=["generic", "x"], status="active", notes="n1u")
             count = store.upsert_recipients([r1u])
             self.assertEqual(count, 1)
 
@@ -36,8 +36,8 @@ class TestStoreBasicFlow(unittest.TestCase):
             self.assertEqual(emails, {"a@example.com", "b@example.com"})
 
             # log send for one; idempotent repeat shouldn't error
-            store.log_send(cid, "a@example.com", template_key="info")
-            store.log_send(cid, "a@example.com", template_key="info")
+            store.log_send(cid, "a@example.com", template_key="generic")
+            store.log_send(cid, "a@example.com", template_key="generic")
 
             # pending after one sent
             pending2 = store.get_pending_recipients(cid)

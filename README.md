@@ -33,10 +33,7 @@ Company A;Brno;info@companya.com;personal;small
 Company B;Prague;contact@companyb.com;generic;medium
 ```
 Notes:
-- `email_type` accepts `personal` or `generic` and is mapped internally to templates:
-  - `personal` → `to_person` template
-  - `generic` → `info` template
-  You may also pass internal flags directly (`to_person`, `info`).
+- `email_type` accepts `personal` or `generic` and is used directly for template selection.
 - `name`, `place`, and `size` are concatenated into the `notes` field.
 
 Commands

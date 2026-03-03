@@ -42,8 +42,8 @@ class TemplateRegistry:
             ),
 
             # For generic inboxes (info@, obchod@, etc.)
-            # Note: key reflects email_type value: "generic"
-            "info": Template(
+            # Key and selector flag: "generic"
+            "generic": Template(
                 key="generic",
                 subject="Zrychlení práce s výkresy z poptávek",
                 body=(
@@ -70,8 +70,8 @@ class TemplateRegistry:
             ),
 
             # For specific person (technicko-obchodní, vedoucí výroby, atd.)
-            # Note: key reflects email_type value: "personal"
-            "to_person": Template(
+            # Key and selector flag: "personal"
+            "personal": Template(
                 key="personal",
                 subject="Zrychlení práce s výkresy z poptávek",
                 body=(
@@ -99,9 +99,9 @@ class TemplateRegistry:
 
     def select(self, flags: List[str]) -> Template:
         fset = {f.lower() for f in (flags or [])}
-        # Accept both internal flags (to_person/info) and user-facing email_type values (personal/generic)
-        if "to_person" in fset or "personal" in fset:
-            return self._templates["to_person"]
-        if "info" in fset or "generic" in fset:
-            return self._templates["info"]
+        # Selection rules: personal > generic > default
+        if "personal" in fset:
+            return self._templates["personal"]
+        if "generic" in fset:
+            return self._templates["generic"]
         return self._templates["default"]

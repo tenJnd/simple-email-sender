@@ -80,15 +80,12 @@ def import_cmd(
             if not email:
                 continue
 
-            # Map email_type from CSV to internal flags used by templates
-            # CSV values: "personal" | "generic" (and allow already-internal ones)
+            # Map email_type from CSV to flags used by templates
+            # CSV values: "personal" | "generic"
             raw_email_type = (row.get("email_type") or "").strip().lower()
             type_map = {
-                "personal": "to_person",
-                "generic": "info",
-                # allow passing internal flags directly too
-                "to_person": "to_person",
-                "info": "info",
+                "personal": "personal",
+                "generic": "generic",
             }
             mapped_flag = type_map.get(raw_email_type, "")
             flags = [mapped_flag] if mapped_flag else []
